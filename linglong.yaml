@@ -1,0 +1,36 @@
+package:
+  id: openblas
+  name: openblas
+  version: 0.3.5
+  kind: lib
+  description: |
+    openblas.
+
+base:
+  id: org.deepin.base
+  version: 20.5.0
+
+depends:
+- id: lapack
+  version: 3.8.0.1
+
+source:
+  kind: git
+  url: https://github.com/deepin-community/openblas.git
+  version: master
+  commit: 40c2ba2393ce228f825aad2b3b9e9823285d2e6a
+  patch:
+  - arm-gcc-flags.patch
+  - kfreebsd.patch
+  - remove-openmp-warning.patch
+  - no-embedded-lapack.patch
+  - shared-blas-lapack.patch
+  - matgen-symbols-not-included.patch
+  - gensymbols-fix-detect-netlib.patch
+  - 3422.patch
+variables:
+  extra_args: |
+    -DBUILD_WITHOUT_LAPACK=yes
+
+build:
+  kind: cmake
